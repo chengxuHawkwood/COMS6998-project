@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ProjectView</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script src="./plotLine.js"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          
+          <script type="text/javascript"> 
+                var url_str = window.location.href;
+                var url = new URL(url_str);
+                var p1 = url.searchParams.get("username");
+                console.log(p1)
+             </script>
+          <a class="navbar-brand" href="#"><script type="text/javascript">
+                        document.write(p1)
+                    </script></a>
+        </div>
+        <div class="my-2 my-lg-0 form-inline">
+            <h3><span class="badge badge-dark mr-100">This Organization</span></h3>
+            <input type="text" class="form-control"></input>
+        </div>
+      </nav>
+ 
+      <div class="input-group" id ="sort">
+            <div class="input-group-prepend">
+              <button type="button" class="btn btn-outline-secondary">SortBy</button>
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">MeasureA</a>
+                <a class="dropdown-item" href="#">MeasureB</a>
+                <a class="dropdown-item" href="#">MeasureC</a>
+              </div>
+            </div>
+            <input type="text">
+      </div>
+
+      <div class="form-inline" id ="recentProjects"></div>
+      
+      <div id ="Projects" ></div>
+      <script>
+          Projects  = [["name1","descp1"],["name2","desc2"],["name3", "desc3"],["name4", "desc4"]]
+          var recentView = document.getElementById("recentProjects");
+          for(var i=0;i<Projects.length;i++){
+              var tmp = document.createElement("div")
+              tmp.className = "smallDiv"
+              tmp.innerHTML="<div>"+Projects[i][0]+"</div><div>"+Projects[i][1]+"</div>"
+              recentView.append(tmp)
+          }
+          var sort = document.getElementById("sort");
+          var projects = document.getElementById("Projects");
+          for(var i=0;i<Projects.length;i++){
+              var tmp = document.createElement("div")
+              tmp.className = "BorderDiv"
+              tmp.innerHTML="<div>"+Projects[i][0]+"</div><div>"+Projects[i][1]+"</div>"
+              recentView.append(tmp)
+          }
+      </script>
+      
+</body>
+</html>

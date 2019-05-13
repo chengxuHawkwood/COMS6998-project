@@ -1,0 +1,31 @@
+.largechartContainer {
+    position: relative;
+    margin: auto;
+    height: 30vh;
+    width: 45vw;
+  }
+.largeDiv {
+    position: relative;
+    margin: auto;
+    width: 70vw;
+  }
+.smallDiv {
+    border-style:solid;
+    border-width:2px;
+    position: relative;
+    height: 15vh;
+    width: 24vw;
+    border-radius:10px;
+    border-color: #888888;
+    margin: 5px;
+  }
+  .BorderDiv {
+    border-top-style: solid;
+    border-top-width:2px;
+    position: relative;
+    margin: auto;
+    height: 20vh;
+    width: 80vw;
+    border-color: #888888;
+    margin-top: 5px;
+  }
