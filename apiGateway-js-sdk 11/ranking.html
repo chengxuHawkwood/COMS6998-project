@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Rankings</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<script src="./plotLine.js"></script>
+<link rel="stylesheet" type="text/css" href="./style.css">
+<title>CSS Website Layout</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* Style the header */
+.header {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: rgb(228, 226, 226);
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: rgb(195, 195, 195);
+  color: black;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 15px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width:600px) {
+  .column {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- <div class="header">
+  <h1>Header</h1>
+  <p>Resize the browser window to see the responsive effect.</p>
+</div> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<script type="text/javascript"> 
+						var url_str = window.location.href;
+						var url = new URL(url_str);
+						var p1 = url.searchParams.get("username");
+						console.log(p1)
+				 </script>
+			<a class="navbar-brand" href="#"><script type="text/javascript">
+										document.write(p1)    //parameters to be replaced later
+								</script></a>   
+		</div>
+		<div class="my-2 my-lg-0">
+				<a href ='./Editproject.html'><button class="btn btn-primary mr-sm-2 " >Edit Project</button></a>
+				<a href ='./GenerateInvite.html'><button class="btn btn-primary my-2 my-sm-0 " >Generate Inivite link</button></a>
+		</div>
+	</nav>
+
+<script> 
+	apigClient = apigClientFactory.newClient();
+</script>
+
+<div class="row">
+  <div class="column">
+		<h4>Group Rankings</h4>
+		<table id="usersTable" class="w3-table-all">
+				<tr>
+					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(1)')" style="cursor:pointer">Name</th>
+					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(2)')" style="cursor:pointer">Effort</th>
+				</tr>
+			
+				<script type="text/javascript">
+					// var p1 = 'Yuting Project'; 
+					var project = document.getElementById("1");
+					var temp = document.createElement("div");
+					function showDetails(p1)
+					{
+						window.location = 'ProjectList.html?username='+p1;
+					}
+				
+					var params = {
+					};
+				
+					var additionalParams = {
+						headers: {
+						},
+						queryParams: {
+							'username' : p1
+						}
+					};
+					var body = {
+					};
+				
+					 apigClient.courseGet(params, body, additionalParams)
+					.then(function(result){
+					// Add success callback code here.
+						// console.log(result['data'])
+						var data = result['data']
+						console.log(data)
+						for(var i = 0; i < data.length; i++){
+							var temp = document.createElement("div")
+							temp.className = "smallDiv"             
+							temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['courseName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(courseName);\"></ul></article></div><hr>";
+							project.append(temp)
+						}	
+					}).catch(function(result){
+					// Add error callback code here.
+					}); 
+					
+				</script>
+
+				<tr class="item">
+					<td>user:2911002</td>
+					<td>UK</td>
+				</tr>
+				<tr class="item">
+					<td>user:2201002</td>
+					<td>France</td>
+				</tr>
+				<tr class="item">
+					<td>user:2901092</td>
+					<td>San Francisco</td>
+				</tr>
+			
+			</table>
+    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p> -->
+  </div>
+  
+  <div class="column">
+		<h4>Member Rankings</h4>
+		<table id="usersTable" class="w3-table-all">
+				<tr>
+					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(1)')" style="cursor:pointer">Name</th>
+					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(2)')" style="cursor:pointer">Effort</th>
+					<!-- <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(3)')" style="cursor:pointer">Sales Person</th> -->
+				</tr>
+			
+				<tr class="item">
+					<td>user:2911002</td>
+					<td>UK</td>
+				</tr>
+				<tr class="item">
+					<td>user:2201002</td>
+					<td>France</td>
+				</tr>
+				<tr class="item">
+					<td>user:2901092</td>
+					<td>San Francisco</td>
+				</tr>
+			
+			</table>
+    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p> -->
+	</div>
+
+  
+</div>
+
+</body>
+</html>

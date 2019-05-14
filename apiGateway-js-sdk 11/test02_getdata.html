@@ -1,0 +1,81 @@
+<!-- Center Column -->
+	<div class="col-sm-6">	
+
+		<div id = "1"></div>
+			<script type="text/javascript">
+				// var p1 = 'Yuting Project'; 
+				var project = document.getElementById("1");
+				var temp = document.createElement("div");
+				function showDetails(p1)
+				{
+					window.location = 'ProjectView.html?username='+p1;
+				}
+
+				let username_input = 'yh3065@columbia.edu'
+
+				var params = {
+				// This is where any modeled request parameters should be added.
+				// The key is the parameter name, as it is defined in the API in API Gateway.
+					// 'leaderGithubName' : username_input,
+				};
+
+				var additionalParams = {
+					// If there are any unmodeled query parameters or headers that must be
+					//   sent with the request, add them here.
+					headers: {
+						// param0: '',
+						// param1: ''
+					},
+					queryParams: {
+						'username' : username_input
+					}
+				};
+				var body = {
+					// This is where you define the body of the request,
+					// 'leaderGithubName' : username_input  // changed to user input later
+				};
+
+			 	apigClient.projectGet(params, body, additionalParams)
+				.then(function(result){
+				// Add success callback code here.
+					// console.log(result['data'])
+					var data = result['data']
+					console.log(data)
+					for(var i = 0; i < data.length; i++){
+						// if(data[i]['leaderGithubName'] === username_input) {
+							var temp = document.createElement("div")
+							temp.className = "smallDiv"             
+
+							temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['projectName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(username_input);\"></ul></article></div><hr>";
+							
+							project.append(temp)
+
+						// }
+
+					var date = data['stats']['commits']
+					console.log(date)
+					for(var j = 0; j < date.length; j++){
+					var temp2 = document.createElement("div")
+					temp2.className = "smallDiv"
+
+					temp2 = data['stats']['commits'][j]['committerDate']
+					
+					console.log(temp2)}
+
+					}	
+
+					
+
+
+					
+				}).catch(function(result){
+				// Add error callback code here.
+				}); 
+
+
+				
+
+				
+			</script>
+
+		</div><!--/Center Column-->

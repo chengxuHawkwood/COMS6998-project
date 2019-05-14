@@ -91,10 +91,9 @@ apigClient = apigClientFactory.newClient({
 				// var p1 = 'Yuting Project'; 
 				var project = document.getElementById("1");
 				var temp = document.createElement("div");
-				function showDetails(p1, i, projectName) //arr)
-				{	
-					//console.log(arr)
-					window.location = 'ProjectView.html?username='+p1+'&i=' + i +'&projectName='+projectName; //+ '&arr=' + arr + '&season2='+p3 + '&season3='+p4 + '&season4='+p5 + '&i=' + i;
+				function showDetails(p1)
+				{
+					window.location = 'ProjectView.html?username='+p1;
 				}
 
 				let username_input = 'yh3065@columbia.edu'
@@ -114,7 +113,6 @@ apigClient = apigClientFactory.newClient({
 					},
 					queryParams: {
 						'username' : username_input
-						
 					}
 				};
 				var body = {
@@ -125,34 +123,43 @@ apigClient = apigClientFactory.newClient({
 			 	apigClient.projectGet(params, body, additionalParams)
 				.then(function(result){
 				// Add success callback code here.
-					 // console.log(result)
+					// console.log(result['data'])
 					var data = result['data']
 					console.log(data)
-					let arr = []
 					for(var i = 0; i < data.length; i++){
 						// if(data[i]['leaderGithubName'] === username_input) {
-						//console.log(data[i]['stats'])
-						// console.log("1")
-						
-						var temp = document.createElement("div")
-						temp.className = "smallDiv"
+							var temp = document.createElement("div")
+							temp.className = "smallDiv"             
 
+							temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['projectName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(username_input);\"></ul></article></div><hr>";
 							
-							var date = data[i]['stats']['commits']
-						
-
-							project_id = i;
-							project_name = data[i]['projectName']
-							temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['projectName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(username_input, project_id, project_name);\"></ul></article></div><hr>";
 							project.append(temp)
-							
 
-				}	
-				
-		
+						// }
+
+					var date = data['stats']['commits']
+					console.log(date)
+					for(var j = 0; j < date.length; j++){
+					var temp2 = document.createElement("div")
+					temp2.className = "smallDiv"
+
+					temp2 = data['stats']['commits'][j]['committerDate']
+					
+					console.log(temp2)}
+
+					}	
+
+					
+
+
+					
 				}).catch(function(result){
 				// Add error callback code here.
 				}); 
+
+
+				
+
 				
 			</script>
 

@@ -86,13 +86,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.courseGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['courseId', 'courseName'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
         var courseGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/course').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['courseId', 'courseName']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
         

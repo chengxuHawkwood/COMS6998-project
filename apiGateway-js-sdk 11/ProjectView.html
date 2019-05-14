@@ -12,19 +12,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
     <script src="./plotLine.js"></script>
     <link rel="stylesheet" type="text/css" href="./style.css">
-
+    <script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="apigClient.js"></script>
+    <script> 
+    apigClient = apigClientFactory.newClient({
+        accessKey: 'AKIAICAYKF4PLVB3DWQQ',
+        secretKey: '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'
+    });
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <script type="text/javascript"> 
-                var url_str = window.location.href;
-                var url = new URL(url_str);
-                var p1 = url.searchParams.get("username");
-                console.log(p1)
+                function getQueryVariable(variable) {
+                    var query = window.location.search.substring(1);
+                    var vars = query.split('&');
+                    console.log(vars)
+                    for (var i = 0; i < vars.length; i++) {
+                        var pair = vars[i].split('=');
+                        if (decodeURIComponent(pair[0]) == variable) {
+                            return decodeURIComponent(pair[1]);
+                        }
+                    }
+                    console.log('Query variable %s not found', variable);
+                }
+                
+                // console.log(p1)
              </script>
           <a class="navbar-brand" href="#"><script type="text/javascript">
-                        document.write(p1)
+                        document.write(getQueryVariable("projectName"))
                     </script></a>
         </div>
         <div class="my-2 my-lg-0">
@@ -39,9 +65,30 @@
           <span id='barGraph' style="display:inline-block"></span>
           
           <script>
-                var data =  [2, 29, 5, 5, 2, 3, 10];
-                var label = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
-                titles=['1','2','3','4','5']
+
+                var params = {
+				// This is where any modeled request parameters should be added.
+				// The key is the parameter name, as it is defined in the API in API Gateway.
+					// 'leaderGithubName' : username_input,
+				};
+
+				var additionalParams = {
+					// If there are any unmodeled query parameters or headers that must be
+					//   sent with the request, add them here.
+					headers: {
+						// param0: '',
+						// param1: ''
+					},
+					queryParams: {
+						'username' :getQueryVariable("username")
+						
+					}
+				};
+				var body = {
+					// This is where you define the body of the request,
+					// 'leaderGithubName' : username_input  // changed to user input later
+                };
+                titles=['1','2', '3', '4']
                 var barspa = document.getElementById('barGraph');
                 var barcanv = document.createElement('div');
                 barcanv.className = "largechartContainer";
@@ -51,21 +98,258 @@
                 canv.className = "largechartContainer"
                 spa.appendChild(canv);
                 barspa.appendChild(barcanv);
-                canv.innerHTML='<canvas id ="summary"></canvas>'
-                LinePloter.plot('summary',data,label);
-                BarPloter.plot('summarybar',data,label);
-                for(var i=0;i<data.length;i++){
-                    var di = document.getElementById("diagrams");
-                    // <span id='TeamGraphs' style="display:inline-block"></span>
-                    var sp = document.createElement('span');
-                    sp.style.display = "inline-block";
-                    di.appendChild(sp);
-                    var newcanv = document.createElement('div');
-                    newcanv.className = "largechartContainer";
-                    sp.appendChild(newcanv);
-                    newcanv.innerHTML='<canvas id ="'+i+'"></canvas>'
-                    LinePloter.plot(i,data,label);
-                }
+
+			 	apigClient.projectGet(params, body, additionalParams)
+				.then(function(result){
+				// Add success callback code here.
+                     // console.log(result)
+                    console.log(getQueryVariable("username"))
+					var data = result['data'][parseInt(getQueryVariable("i"))]
+					console.log(data)
+					let arr = []
+                    var namesData= new Map();
+                    var names = data['memberNames']['values']
+                   // console.log(names)
+                    var date = data['stats']['commits']
+                   // console.log(names.length)
+                    for(var i=0;i<names.length;i++){
+                       // console.log(i)                        
+                        var tmparr = [0,0,0,0]
+                        namesData.set(names[i], tmparr)
+                    }
+                    console.log(namesData)
+                    var count1 = 0;
+                    var count2 = 0;
+                    var count3 = 0;
+                    var count4 = 0;
+                    var count5 = 0;
+                    var count6 = 0;
+                    var count7 = 0;
+                    var count8 = 0;
+                    var count9 = 0;
+                    var count10 = 0;
+                    var count11 = 0;
+                    var count12 = 0;							
+                    for(var j = 0; j < date.length; j++){
+
+                        temp2 = date[j]['committerDate'].substring(5,7)
+                        var name = date[j]['author']
+                        if (temp2 == "01") {
+                            count1++
+                            if (namesData.has(name)){
+                                var commitNum= namesData.get(name)
+                                commitNum[0] = commitNum[0]+1
+                                namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[0] = commitNum[0]+1
+                                namesData.set(name, commitNum)
+                            }
+
+                        }
+
+                        if (temp2 == "02") {
+                            count2++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[0] = commitNum[0]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[0] = commitNum[0]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "03") {
+                            count3++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[0] = commitNum[0]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[0] = commitNum[0]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "04") {
+                            count4++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[1] = commitNum[1]+1
+                            
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[1] = commitNum[1]+1
+                                namesData.set(name, commitNum)
+                            }
+                            
+                        }
+                        if (temp2 == "05") {
+                            count5++
+                            if (namesData.has(name)){
+                                
+                                var commitNum= namesData.get(name)
+                                commitNum[1] = commitNum[1]+1
+                                namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[1] = commitNum[1]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "06") {
+                            count6++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[1] = commitNum[1]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[2] = commitNum[2]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "07") {
+                            count7++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[2] = commitNum[2]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[2] = commitNum[2]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "08") {
+                            count8++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[2] = commitNum[2]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[2] = commitNum[2]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "09") {
+                            count9++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[2] = commitNum[2]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[2] = commitNum[2]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "10") {
+                            count10++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[3] = commitNum[3]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[3] = commitNum[3]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "11") {
+                            count11++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[3] = commitNum[3]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= [namesData.get('GitHub')]
+                                commitNum[3] = commitNum[3]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+                        if (temp2 == "12") {
+                            count12++
+                            if (namesData.has(name)){
+                            var commitNum= namesData.get(name)
+                            commitNum[3] = commitNum[3]+1
+                            namesData.set(name, commitNum)
+                            }else{
+                                var commitNum= namesData.get('GitHub')
+                                commitNum[3] = commitNum[3]+1
+                                namesData.set(name, commitNum)
+                            }
+                        }
+
+                    }
+
+                    
+
+                    season1 = count1 + count2 + count3;
+                    
+                    
+                    season2 = count4 + count5 + count6;
+                    season3 = count7 + count8 + count9;
+                    season4 = count10 + count11 + count12;
+                    
+                    arr.push(season1)
+                    arr.push(season2)
+                    arr.push(season3)
+                    arr.push(season4)
+                    var data = arr;// [arr,p3,p4,p5,i];
+                    console.log(data)
+                    var label = ['season 1', 'season 2', 'season 3', 'season 4']
+                    canv.innerHTML='<canvas id ="summary"></canvas>'
+                    LinePloter.plot('summary',data,label);
+                    BarPloter.plot('summarybar',data,label);
+                    for(var i=0;i<names.length;i++){
+                       
+                        var di = document.getElementById("diagrams");
+                        // <span id='TeamGraphs' style="display:inline-block"></span>
+                        var sp = document.createElement('span');
+                        sp.style.display = "inline-block";
+                        di.appendChild(sp);
+                        var newcanv = document.createElement('div');
+                        newcanv.className = "largechartContainer";
+                        sp.appendChild(newcanv);
+                        newcanv.innerHTML='<canvas id ="'+names[i]+'"></canvas>'
+                        LinePloter.plot(names[i],namesData.get(names[i]),label);
+                    }
+			
+				
+		
+				}).catch(function(result){
+				// Add error callback code here.
+				}); 
+                // var data = arr;// [arr,p3,p4,p5,i];
+                // console.log(data)
+                // var label = ['season 1', 'season 2', 'season 3', 'season 4']
+                // titles=['1','2', '3', '4']
+                // var barspa = document.getElementById('barGraph');
+                // var barcanv = document.createElement('div');
+                // barcanv.className = "largechartContainer";
+                // barcanv.innerHTML='<canvas id ="summarybar"></canvas>'
+                // var spa = document.getElementById('lineGraph');
+                // var canv = document.createElement('div');
+                // canv.className = "largechartContainer"
+                // spa.appendChild(canv);
+                // barspa.appendChild(barcanv);
+
+                // for(var i=0;i<data.length;i++){
+                //     var di = document.getElementById("diagrams");
+                //     // <span id='TeamGraphs' style="display:inline-block"></span>
+                //     var sp = document.createElement('span');
+                //     sp.style.display = "inline-block";
+                //     di.appendChild(sp);
+                //     var newcanv = document.createElement('div');
+                //     newcanv.className = "largechartContainer";
+                //     sp.appendChild(newcanv);
+                //     newcanv.innerHTML='<canvas id ="'+i+'"></canvas>'
+                //     LinePloter.plot(i,data,label);
+                // }
             </script>
       </div>
 </body>
