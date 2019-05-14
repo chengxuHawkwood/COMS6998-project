@@ -1,205 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Rankings</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://www.w3schools.com/lib/w3.js"></script>
-<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-<script src="./plotLine.js"></script>
-<link rel="stylesheet" type="text/css" href="./style.css">
-<title>CSS Website Layout</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Rankings</title>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+        <script src="https://www.w3schools.com/lib/w3.js"></script>
+        <link
+            href="https://www.w3schools.com/w3css/4/w3.css"
+            rel="stylesheet"
+        />
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+        <script src="./plotLine.js"></script>
+        <script
+            type="text/javascript"
+            src="lib/axios/dist/axios.standalone.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/rollups/hmac-sha256.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/rollups/sha256.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/components/hmac.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/components/enc-base64.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/url-template/url-template.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/sigV4Client.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/apiGatewayClient.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/simpleHttpClient.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/utils.js"
+        ></script>
+        <script type="text/javascript" src="apigClient.js"></script>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <title>CSS Website Layout</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
 
-body {
-  margin: 0;
-}
+            body {
+                margin: 0;
+            }
 
-/* Style the header */
-.header {
-  background-color: #f1f1f1;
-  padding: 20px;
-  text-align: center;
-}
+            /* Style the header */
+            .header {
+                background-color: #f1f1f1;
+                padding: 20px;
+                text-align: center;
+            }
 
-/* Style the top navigation bar */
-.topnav {
-  overflow: hidden;
-  background-color: rgb(228, 226, 226);
-}
+            /* Style the top navigation bar */
+            .topnav {
+                overflow: hidden;
+                background-color: rgb(228, 226, 226);
+            }
 
-/* Style the topnav links */
-.topnav a {
-  float: left;
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
+            /* Style the topnav links */
+            .topnav a {
+                float: left;
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
 
-/* Change color on hover */
-.topnav a:hover {
-  background-color: rgb(195, 195, 195);
-  color: black;
-}
+            /* Change color on hover */
+            .topnav a:hover {
+                background-color: rgb(195, 195, 195);
+                color: black;
+            }
 
-/* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 15px;
-}
+            /* Create three equal columns that floats next to each other */
+            .column {
+                float: left;
+                width: 50%;
+                padding: 15px;
+            }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+            /* Clear floats after the columns */
+            .row:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width:600px) {
-  .column {
-    width: 100%;
-  }
-}
-</style>
-</head>
-<body>
-
-<!-- <div class="header">
+            /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+            @media screen and (max-width: 600px) {
+                .column {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- <div class="header">
   <h1>Header</h1>
   <p>Resize the browser window to see the responsive effect.</p>
 </div> -->
+        <script>
+            apigClient = apigClientFactory.newClient({
+                accessKey: '',
+                secretKey: ''
+            });
+            console.log(window.location.host);
+        </script>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <script type="text/javascript">
+                    var url_str = window.location.href;
+                    var url = new URL(url_str);
+                    var p1 = url.searchParams.get('courseName');
+                </script>
+                <a class="navbar-brand" href="#"
+                    ><script type="text/javascript">
+                        document.write(p1); //parameters to be replaced later
+                    </script></a
+                >
+            </div>
+            <script>
+                function getQueryVariable(variable) {
+                    var query = window.location.search.substring(1);
+                    var vars = query.split('&');
+                    console.log(vars);
+                    for (var i = 0; i < vars.length; i++) {
+                        var pair = vars[i].split('=');
+                        if (decodeURIComponent(pair[0]) == variable) {
+                            return decodeURIComponent(pair[1]);
+                        }
+                    }
+                    console.log('Query variable %s not found', variable);
+                }
+                function generateLink() {
+                    var params = {};
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<script type="text/javascript"> 
-						var url_str = window.location.href;
-						var url = new URL(url_str);
-						var p1 = url.searchParams.get("username");
-						console.log(p1)
-				 </script>
-			<a class="navbar-brand" href="#"><script type="text/javascript">
-										document.write(p1)    //parameters to be replaced later
-								</script></a>   
-		</div>
-		<div class="my-2 my-lg-0">
-				<a href ='./Editproject.html'><button class="btn btn-primary mr-sm-2 " >Edit Project</button></a>
-				<a href ='./GenerateInvite.html'><button class="btn btn-primary my-2 my-sm-0 " >Generate Inivite link</button></a>
-		</div>
-	</nav>
+                    var body = {
+                        id: getQueryVariable('id'),
+                        inviteToken: ''
+                    };
+                    apigClient.coursePut(params, body).then(function(result) {
+                        console.log(result);
+                        alert(
+                            'invite_link:' +
+                                window.location.host.replace(
+                                    'ranking',
+                                    'Createproject'
+                                ) +
+                                '?id=' +
+                                result['data']['id']
+                        );
+                    });
+                }
+            </script>
+            <div class="my-2 my-lg-0">
+                <a href="./Editproject.html"
+                    ><button class="btn btn-primary mr-sm-2 ">
+                        Edit Project
+                    </button></a
+                >
+                <button
+                    class="btn btn-primary my-2 my-sm-0 "
+                    onclick="generateLink()"
+                >
+                    Generate Inivite link
+                </button>
+            </div>
+        </nav>
 
-<script> 
-	apigClient = apigClientFactory.newClient();
-</script>
+        <div class="row">
+            <div class="column">
+                <h4>Group Rankings</h4>
+                <table id="usersTable" class="w3-table-all">
+                    <tr>
+                        <th
+                            onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(1)')"
+                            style="cursor:pointer"
+                        >
+                            Name
+                        </th>
+                        <th
+                            onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(2)')"
+                            style="cursor:pointer"
+                        >
+                            Effort
+                        </th>
+                        <!-- <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(3)')" style="cursor:pointer">Sales Person</th> -->
+                    </tr>
 
-<div class="row">
-  <div class="column">
-		<h4>Group Rankings</h4>
-		<table id="usersTable" class="w3-table-all">
-				<tr>
-					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(1)')" style="cursor:pointer">Name</th>
-					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(2)')" style="cursor:pointer">Effort</th>
-				</tr>
-			
-				<script type="text/javascript">
-					// var p1 = 'Yuting Project'; 
-					var project = document.getElementById("1");
-					var temp = document.createElement("div");
-					function showDetails(p1)
-					{
-						window.location = 'ProjectList.html?username='+p1;
-					}
-				
-					var params = {
-					};
-				
-					var additionalParams = {
-						headers: {
-						},
-						queryParams: {
-							'username' : p1
-						}
-					};
-					var body = {
-					};
-				
-					 apigClient.courseGet(params, body, additionalParams)
-					.then(function(result){
-					// Add success callback code here.
-						// console.log(result['data'])
-						var data = result['data']
-						console.log(data)
-						for(var i = 0; i < data.length; i++){
-							var temp = document.createElement("div")
-							temp.className = "smallDiv"             
-							temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['courseName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(courseName);\"></ul></article></div><hr>";
-							project.append(temp)
-						}	
-					}).catch(function(result){
-					// Add error callback code here.
-					}); 
-					
-				</script>
+                    <script type="text/javascript">
+                        var url_str = window.location.href;
+                        var url = new URL(url_str);
+                        var courseName = url.searchParams.get('courseName');
+                        var id = url.searchParams.get('id');
+                        console.log(courseName);
+                        console.log(id);
+                        // var p1 = 'Yuting Project';
+                        var table = document.getElementById('usersTable');
+                        function showDetails(p1) {
+                            window.location = 'ProjectList.html?username=' + p1;
+                        }
 
-				<tr class="item">
-					<td>user:2911002</td>
-					<td>UK</td>
-				</tr>
-				<tr class="item">
-					<td>user:2201002</td>
-					<td>France</td>
-				</tr>
-				<tr class="item">
-					<td>user:2901092</td>
-					<td>San Francisco</td>
-				</tr>
-			
-			</table>
-    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p> -->
-  </div>
-  
-  <div class="column">
-		<h4>Member Rankings</h4>
-		<table id="usersTable" class="w3-table-all">
-				<tr>
-					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(1)')" style="cursor:pointer">Name</th>
-					<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(2)')" style="cursor:pointer">Effort</th>
-					<!-- <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(3)')" style="cursor:pointer">Sales Person</th> -->
-				</tr>
-			
-				<tr class="item">
-					<td>user:2911002</td>
-					<td>UK</td>
-				</tr>
-				<tr class="item">
-					<td>user:2201002</td>
-					<td>France</td>
-				</tr>
-				<tr class="item">
-					<td>user:2901092</td>
-					<td>San Francisco</td>
-				</tr>
-			
-			</table>
-    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p> -->
-	</div>
+                        var params = {};
 
-  
-</div>
+                        var additionalParams = {
+                            headers: {},
+                            queryParams: {
+                                id: id
+                            }
+                        };
+                        var body = {};
+                        apigClient
+                            .courseGet({}, {}, additionalParams)
+                            .then(result => {
+                                const projectIds =
+                                    result.data[0].projects.values;
+                                return Promise.all(
+                                    projectIds.map(projectId =>
+                                        apigClient.projectGet(
+                                            {},
+                                            {},
+                                            { queryParams: { id: projectId } }
+                                        )
+                                    )
+                                );
+                            })
+                            .then(projects => {
+                                let projectsStats = projects.map(project => {
+                                    const projectData = project.data[0];
+                                    const repoName = projectData.repoName;
+                                    let numCommits = 0;
+                                    if (projectData.stats) {
+                                        numCommits =
+                                            project.data[0].stats.commits
+                                                .length;
+                                    }
+                                    return {
+                                        repoName: repoName,
+                                        numCommits: numCommits
+                                    };
+                                });
+                                projectsStats.sort(
+                                    (projectStats1, projectStats2) =>
+                                        projectStats2.numCommits -
+                                        projectStats1.numCommits
+                                );
+                                projectsStats.forEach(projectStats => {
+                                    const {
+                                        repoName: repoName,
+                                        numCommits: numCommits
+                                    } = projectStats;
+                                    const row = document.createElement('tr');
+                                    row.className = 'item';
+                                    row.innerHTML = `<tr class="item"><td>${repoName}</td><td>${numCommits}</td></tr>`;
+                                    table.append(row);
+                                });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    </script>
+                </table>
 
-</body>
+                <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p> -->
+            </div>
+
+            <div class="column" id="2nd_col">
+                <h4>Member Rankings</h4>
+                <table id="usersTable2" class="w3-table-all">
+                    <tr>
+                        <th
+                            onclick="w3.sortHTML('#usersTable2', '.item', 'td:nth-child(1)')"
+                            style="cursor:pointer"
+                        >
+                            Name
+                        </th>
+                        <th
+                            onclick="w3.sortHTML('#usersTable2', '.item', 'td:nth-child(2)')"
+                            style="cursor:pointer"
+                        >
+                            Effort
+                        </th>
+                    </tr>
+
+                    <script type="text/javascript">
+                        var p1 = 'Yuting Project';
+                        var table2 = document.getElementById('usersTable2');
+                        var temp2 = document.createElement('tr');
+                        function showDetails(p1) {
+                            window.location = 'ProjectList.html?username=' + p1;
+                        }
+
+                        var params = {};
+
+                        var additionalParams = {
+                            headers: {},
+                            queryParams: {
+                                id: id
+                            }
+                        };
+                        var body = {};
+
+                        apigClient
+                            .courseGet(params, body, additionalParams)
+                            .then(function(result) {
+                                // Add success callback code here.
+                                var dat = result['data'];
+                                // console.log(dat)
+                                var proj_list =
+                                    result['data'][0]['projects']['values']; //replace 0 as i
+                                for (var j = 0; j < proj_list.length; j++) {
+                                    additionalParams = {
+                                        headers: {},
+                                        queryParams: {
+                                            id: proj_list[j]
+                                        }
+                                    };
+                                    console.log(proj_list[j]);
+                                    apigClient
+                                        .projectGet(
+                                            params,
+                                            body,
+                                            additionalParams
+                                        )
+                                        .then(function(rst) {
+                                            // rst['data'][0]['stats']
+                                            // proj_name.push(rst['data'][0]['repoName'])
+                                            // commit_count.push(rst['data'][0]['stats']['commits'].length)
+                                            var temp2 = document.createElement(
+                                                'tr'
+                                            );
+                                            temp2.className = 'item';
+                                            temp2.innerHTML =
+                                                '<tr class="item"><td>' +
+                                                rst['data'][0]['repoName'] +
+                                                '</td><td>' +
+                                                rst['data'][0]['stats'][
+                                                    'commits'
+                                                ].length +
+                                                '</td></tr>';
+                                            table2.append(temp2);
+                                            console.log(
+                                                rst['data'][0]['stats'][
+                                                    'commits'
+                                                ]
+                                            );
+                                        })
+                                        .catch(function(rst) {
+                                            // Add error callback code here.
+                                        });
+                                }
+                            })
+                            .catch(function(result) {
+                                // Add error callback code here.
+                            });
+                    </script>
+                </table>
+            </div>
+        </div>
+    </body>
 </html>
