@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <!--Cognito JavaScript-->
+        <script src="cognito/js/amazon-cognito-identity.min.js"></script>
+        <script src="cognito/js/config.js"></script>
+        <script
+            type="text/javascript"
+            src="lib/axios/dist/axios.standalone.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/rollups/hmac-sha256.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/rollups/sha256.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/components/hmac.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/CryptoJS/components/enc-base64.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/url-template/url-template.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/sigV4Client.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/apiGatewayClient.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/simpleHttpClient.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="lib/apiGatewayCore/utils.js"
+        ></script>
+        <script type="text/javascript" src="apigClient.js"></script>
+        <script type="text/javascript" src="utils.js"></script>
+        <script type="text/javascript" src="manageAuth.js"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+
+    <body>
+        <div class="loading">
+            <h1>Loading...</h1>
+        </div>
+        <div class="unauthorized hidden">
+            <button type="button" onclick="authorize()">
+                Authorize Github
+            </button>
+        </div>
+        <div class="container authorized hidden">
+            <div>
+                <h2>User Profile</h2>
+                <button type="button" onclick="signOut()">Sign out</button>
+            </div>
+
+            <div>
+                <h4>Personal Information</h4>
+
+                <br />
+                <div>
+                    <label>Email <span>(Username)</span></label>
+                </div>
+                <div>
+                    <label id="email_value"></label>
+                </div>
+            </div>
+        </div>
+        <script>
+            const apigClient = apigClientFactory.newClient({
+                accessKey: '',
+                secretKey: ''
+            });
+            const data = {
+                UserPoolId: _config.cognito.userPoolId,
+                ClientId: _config.cognito.clientId
+            };
+            const userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+            const cognitoUser = userPool.getCurrentUser();
+
+            const signOut = () => {
+                if (cognitoUser) {
+                    cognitoUser.signOut();
+                }
+                window.location = 'login.html';
+            };
+            window.onload = () => {
+                if (cognitoUser) {
+                    promisify(cognitoUser.getSession.bind(cognitoUser))()
+                        .then(session => {
+                            console.log(
+                                'session validity: ' + session.isValid()
+                            );
+                            // this function is in manageAuth.js
+                            display(cognitoUser, apigClient);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } else {
+                    window.location = 'login.html';
+                }
+            };
+        </script>
+    </body>
+</html>
