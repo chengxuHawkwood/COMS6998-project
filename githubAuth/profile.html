@@ -88,7 +88,6 @@
             };
             const userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
             const cognitoUser = userPool.getCurrentUser();
-            console.log(cognitoUser);
 
             const signOut = () => {
                 if (cognitoUser) {

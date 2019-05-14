@@ -31,14 +31,10 @@
                 required
             />
             <button type="button" onclick="signInButton();">Sign in</button>
-            <button type="button" onclick="showDetails();">confirm</button>
             <a href="register.html">Sign up here</a>
         </form>
 
         <script>
-            function showDetails() {
-                window.location = 'profile.html';
-            }
             function signInButton() {
                 var authenticationData = {
                     Username: document.getElementById('inputUsername').value,
@@ -71,7 +67,7 @@
                     onSuccess: function(result) {
                         var accessToken = result.getAccessToken().getJwtToken();
                         console.log(accessToken);
-                        console.log(cognitoUser);
+                        window.location = 'profile.html';
                     },
 
                     onFailure: function(err) {
