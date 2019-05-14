@@ -21,7 +21,7 @@ const getUsername = cognitoUser => {
 const fetchUserList = (apigClient, username) => {
     const additionalParams = {
         queryParams: {
-            usernmae: username
+            username: username
         }
     };
     return apigClient
