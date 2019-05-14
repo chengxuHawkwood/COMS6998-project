@@ -62,7 +62,8 @@
         <div class="container authorized hidden">
             <div>
                 <h2>User Profile</h2>
-                <button type="button" onclick="signOut()">Sign out</button>
+                <!-- <script>display(cognitoUser, apigClient);</script> -->
+                <button type="button" onclick="signOut()">View Projects</button>
             </div>
 
             <div>
@@ -88,13 +89,28 @@
             };
             const userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
             const cognitoUser = userPool.getCurrentUser();
+            // console.log(cognitoUser['username'])
+            // getUsername(cognitoUser)
+            //     .then(username => {
+            //         // check if the user has authorized github
+            //         const code = new URL(window.location.href).searchParams.get('code');
+            //         console.log(username)
+            //         if (code) {
+            //             return displayAuthorizing(apigClient, username, code);
+            //         }
+            //         return Promise.resolve(username);
+            //     })
+            //     .then(username => {
+            //         console.log(username)
+            //         return fetchUserList(apigClient, username);
+            //     })
+            //     .then(userList => {
+            //         // control the contents displayed to user
+            //         console.log(userList)
+            //         displayControl(userList);
+            //     });
+            // console.log(getUsername(cognitoUser['username']))
 
-            const signOut = () => {
-                if (cognitoUser) {
-                    cognitoUser.signOut();
-                }
-                window.location = 'login.html';
-            };
             window.onload = () => {
                 if (cognitoUser) {
                     promisify(cognitoUser.getSession.bind(cognitoUser))()
@@ -103,7 +119,7 @@
                                 'session validity: ' + session.isValid()
                             );
                             // this function is in manageAuth.js
-                            display(cognitoUser, apigClient);
+                            display(cognitoUser, apigClient)
                         })
                         .catch(err => {
                             console.log(err);
@@ -113,5 +129,18 @@
                 }
             };
         </script>
+        <script src="cognito/js/amazon-cognito-identity.min.js"></script>
+        <script src="cognito/js/config.js"></script>
+        <script>
+            const signOut = () => {
+                // if (cognitoUser) {
+                //     cognitoUser.signOut();
+                // }
+                if (cognitoUser) {
+                    console.log(getUsername(cognitoUser))
+                    window.location = '/projects.html'+"?username="+document.getElementById("email_value").value;
+                }
+            };
+            </script>
     </body>
 </html>

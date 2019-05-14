@@ -87,13 +87,12 @@
 				// var p1 = 'Yuting Project'; 
 				var project = document.getElementById("1");
 				var temp = document.createElement("div");
-				function showDetails(p1)
+				function showDetails(p1, p2)
 				{
-					window.location = 'ProjectList.html?username='+p1;
+					window.location = 'ranking.html?courseName='+p1+'&id='+p2;
 				}
 
 				let instructor = 'John Kender'
-				let courseName = 'Visual Database'
 
 				var params = {
 				// This is where any modeled request parameters should be added.
@@ -115,7 +114,8 @@
 					// 'instructor' : instructor,  // changed to user input later
 					// 'courseName' : 'Visual Database'
 				};
-
+				let courseName = "";
+				let courseId = ""
 			 	apigClient.courseGet(params, body, additionalParams)
 				.then(function(result){
 				// Add success callback code here.
@@ -123,9 +123,12 @@
 					var data = result['data']
 					console.log(data)
 					for(var i = 0; i < data.length; i++){
+						courseName = data[i]['courseName']
+						courseId = data[i]['id']
+						// console.log(data[i]['courseName'])
 						var temp = document.createElement("div")
 						temp.className = "smallDiv"             
-						temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['courseName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(courseName);\"></ul></article></div><hr>";
+						temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['courseName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(courseName,courseId);\"></ul></article></div><hr>";
 						project.append(temp)
 					}	
 				}).catch(function(result){

@@ -117,6 +117,42 @@ body {
 	accessKey: 'AKIAICAYKF4PLVB3DWQQ',
 	secretKey: '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'
 });
+	//https://www.w3schools.com/howto/howto_js_sort_table.asp
+	function sortTable(tablename) {
+	var table, rows, switching, i, x, y, shouldSwitch;
+	table = document.getElementById(tablename);
+	switching = true;
+	/* Make a loop that will continue until
+	no switching has been done: */
+	while (switching) {
+		// Start by saying: no switching is done:
+		switching = false;
+		rows = table.rows;
+		/* Loop through all table rows (except the
+		first, which contains table headers): */
+		for (i = 1; i < (rows.length - 1); i++) {
+		// Start by saying there should be no switching:
+		shouldSwitch = false;
+		/* Get the two elements you want to compare,
+		one from current row and one from the next: */
+		x = rows[i].getElementsByTagName("td")[1];
+		y = rows[i + 1].getElementsByTagName("td")[1];
+		// Check if the two rows should switch place:
+		if (parseInt(x.innerHTML.toLowerCase()) < parseInt(y.innerHTML.toLowerCase())) {
+			// If so, mark as a switch and break the loop:
+			
+			shouldSwitch = true;
+			break;
+		}
+		}
+		if (shouldSwitch) {
+		/* If a switch has been marked, make the switch
+		and mark that a switch has been done: */
+		rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		switching = true;
+		}
+	}
+	}
 </script>
 
 <div class="row">
@@ -125,11 +161,12 @@ body {
 		<table id="usersTable" class="w3-table-all">
 			  <tr>
 						<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(1)')" style="cursor:pointer">Name</th>
-						<th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(2)')" style="cursor:pointer">Effort</th>
+						<th onclick="sortTable('usersTable')" style="cursor:pointer">Effort</th>
 						<!-- <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(3)')" style="cursor:pointer">Sales Person</th> -->
 				</tr>
 
 				<script type="text/javascript">
+
 					var url_str = window.location.href;
 					var url = new URL(url_str);
 					var courseName = url.searchParams.get("courseName");
@@ -195,13 +232,13 @@ body {
 			</table>
     <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p> -->
   </div>
-  
+
   <div class="column" id = '2nd_col'>
 		<h4>Member Rankings</h4>
 		<table id="usersTable2" class="w3-table-all">
 				<tr>
 					<th onclick="w3.sortHTML('#usersTable2', '.item', 'td:nth-child(1)')" style="cursor:pointer">Name</th>
-					<th onclick="w3.sortHTML('#usersTable2', '.item', 'td:nth-child(2)')" style="cursor:pointer">Effort</th>
+					<th onclick="sortTable('usersTable2')" style="cursor:pointer">Effort</th>
 				</tr>
 				
 				<script type="text/javascript">
@@ -248,6 +285,7 @@ body {
 									// proj_name.push(rst['data'][0]['repoName'])
 									// commit_count.push(rst['data'][0]['stats']['commits'].length)
 									var member = []
+									var project = rst['data'][0]['projectName']
 									var commits = rst['data'][0]['stats']['commits']
 									for (var i = 0; i < commits.length; i++) {
 										member.push(commits[i]['committer'])
@@ -268,7 +306,7 @@ body {
 											console.log(dic[k]) 
 											var temp2 = document.createElement("tr")
 											temp2.className = "item"      
-											temp2.innerHTML = "<tr class=\"item\"><td>" + k + "</td><td>" + dic[k]  + "</td></tr>"
+											temp2.innerHTML = "<tr class=\"item\"><td>" + k+" in "+project + "</td><td>" + dic[k]  + "</td></tr>"
 											table2.append(temp2)
 										}
 									}

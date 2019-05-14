@@ -49,7 +49,9 @@ const hide = items => {
 
 const displayAuthorized = user => {
     show(document.getElementsByClassName('authorized'));
+    document.getElementById('email_value').value = user.username;
     document.getElementById('email_value').textContent = user.username;
+    return user.username
 };
 
 const displayUnauthorized = () => {
@@ -72,6 +74,7 @@ const displayControl = userList => {
         // display user data since the user has already authorized github
         const user = userList[0];
         displayAuthorized(user);
+        return user.username
     } else {
         // only display the button for github authorization
         displayUnauthorized();
