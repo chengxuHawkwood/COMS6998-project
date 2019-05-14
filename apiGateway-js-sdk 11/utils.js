@@ -1,3 +1,8 @@
+/* IMPORTANT: To be able to use the following functions, please include the
+following scripts in the html file
+<script src="cognito/js/amazon-cognito-identity.min.js"></script>
+<script src="cognito/js/config.js"></script> */
+
 /* A helper function that will change a function that receives callback to a 
 function that returns a promise */
 const promisify = func => {
