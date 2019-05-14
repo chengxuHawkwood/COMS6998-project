@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Portal 1</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+<script type="text/javascript" src="lib/url-template/url-template.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+<script type="text/javascript" src="apigClient.js"></script>
+<script> 
+	apigClient = apigClientFactory.newClient();
+</script>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+            <!-- Logo and responsive toggle -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span>Project Auditor</a>
+            </div>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                	
+                    <li class="active">
+                        <a href="courses.html">Courses</a>
+                    </li>
+                    <li>
+                        <a href="projects.html">Projects</a>
+                    </li>
+                    
+            </li>
+					
+                </ul>
+
+				
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+<div class="container-fluid">
+
+		  
+	<!-- Center Column -->
+	<div class="col-sm-6">	
+
+		<div id = "1"></div>
+			<script type="text/javascript">
+				// var p1 = 'Yuting Project'; 
+				var project = document.getElementById("1");
+				var temp = document.createElement("div");
+				function showDetails(p1, p2)
+				{
+					window.location = 'ranking.html?courseName='+p1+'&id='+p2;
+				}
+
+				let instructor = 'John Kender'
+
+				var params = {
+				// This is where any modeled request parameters should be added.
+				// The key is the parameter name, as it is defined in the API in API Gateway.
+				};
+
+				var additionalParams = {
+					headers: {
+						// param0: '',
+						// param1: ''
+					},
+					queryParams: {
+						'instructor' : 'Peter Allen'
+					}
+				};
+				var body = {
+					// This is where you define the body of the request,
+					// 'courseId' : "4a2d8c7d-fd73-40e2-9e81-4551e1f8bab3",
+					// 'instructor' : instructor,  // changed to user input later
+					// 'courseName' : 'Visual Database'
+				};
+				let courseName = "";
+				let courseId = ""
+			 	apigClient.courseGet(params, body, additionalParams)
+				.then(function(result){
+				// Add success callback code here.
+					// console.log(result['data'])
+					var data = result['data']
+					console.log(data)
+					for(var i = 0; i < data.length; i++){
+						courseName = data[i]['courseName']
+						courseId = data[i]['id']
+						// console.log(data[i]['courseName'])
+						var temp = document.createElement("div")
+						temp.className = "smallDiv"             
+						temp.innerHTML = "<div class=\"row\"><article class=\"col-xs-12\"><h2>" + data[i]['courseName'] + "</h2><p>" + data[i]['description'] + "</p><ul class=\"list-inline\"><input type=\"button\" name=\"theButton\" value=\"Details\" class=\"btn btn-primary mr-sm-2\" onclick=\"showDetails(courseName,courseId);\"></ul></article></div><hr>";
+						project.append(temp)
+					}	
+				}).catch(function(result){
+				// Add error callback code here.
+				}); 
+
+				
+			</script>
+			
+	</div><!--/Center Column-->
+
+
+	  <!-- Right Column -->
+	  <div class="col-sm-3">
+
+			<!-- Form --> 
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<span class="glyphicon glyphicon-log-in"></span> 
+						Log In
+					</h3>
+				</div>
+				<div class="panel-body">
+					<form>
+						<div class="form-group">
+							<input type="text" class="form-control" id="uid" name="uid" placeholder="Username">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
+						</div>
+						<button type="submit" class="btn btn-default">Log In</button>
+					</form>
+				</div>
+			</div>
+ 
+			<!-- Progress Bars -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<span class="glyphicon glyphicon-scale"></span> 
+						Dramatically Engage
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+						aria-valuemin="0" aria-valuemax="100" style="width:100%">
+							100% Proactively Envisioned
+						</div>
+					</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
+						aria-valuemin="0" aria-valuemax="100" style="width:80%">
+							80% Objectively Innovated
+						</div>
+					</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45"
+						aria-valuemin="0" aria-valuemax="100" style="width:45%">
+							45% Portalled
+						</div>
+					</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="35"
+						aria-valuemin="0" aria-valuemax="100" style="width:35%">
+							35% Done
+						</div>
+					</div>
+				</div>
+			</div>
+
+			  
+				
+
+	  </div><!--/Right Column -->
+
+	</div><!--/container-fluid-->
+	
+	
+    <!-- jQuery -->
+    <script src="js/jquery-1.11.3.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+	
+	<!-- IE10 viewport bug workaround -->
+	<script src="js/ie10-viewport-bug-workaround.js"></script>
+	
+	<!-- Placeholder Images -->
+	<script src="js/holder.min.js"></script>
+	
+</body>
+
+</html>
